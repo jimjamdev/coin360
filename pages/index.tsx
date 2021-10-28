@@ -37,11 +37,12 @@ const Home: NextPage<ICoinPage> = ({coinData}) => {
                             const changeComparison = changeDiff(coin.change, c.change)
                             const isNegative = coin.change > c.change
                             const isEmptyCell = coin.name === c.name
+                            const plusOrMinus = !isNegative ? '+' : '-'
                             return(
                                 <td key={c.name}>
                                     { index === 0 && <div className="cell-title">{c.name}</div> }
                                     <div className={`cell-info ${isNegative && 'negative'} ${isEmptyCell && 'empty'}`}>
-                                        {c.change}%<br /><strong>{isEmptyCell && '-' || changeComparison + '%'}</strong>
+                                        {/*{c.change}%<br />*/}<strong>{isEmptyCell && '-' || plusOrMinus + changeComparison + '%'}</strong>
                                     </div>
                                 </td>
                             )
