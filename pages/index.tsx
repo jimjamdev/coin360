@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import {getCoins} from '../providers'
 import {ICoinData} from "../interface/coin";
+import transformCoinData from "../lib/transform-coin-data";
 import styles from '../styles/Home.module.scss'
 
 interface ICoinPage {
@@ -11,7 +12,8 @@ interface ICoinPage {
 const Home: NextPage<ICoinPage> = ({coinData}) => {
   const {data = [], error = ''} = coinData;
 
-  const transformedData = data.filter(coin => coin.p !== 0)
+  const transformedData = transformCoinData(data);
+    const slicedData = transformedData.slice(0, 5); //todo: we want to tie this into a provider so we dont display all data at once. load what only on the screen with onscroll
 
   return (
     <div className={styles.container}>
@@ -23,7 +25,21 @@ const Home: NextPage<ICoinPage> = ({coinData}) => {
       {error && error}
       <table>
         <tbody>
-        {transformedData.map((coin) => {
+        {
+            slicedData.map(coin => {
+                return (
+                    <tr key={coin.name}>
+                        <td>{coin.name}</td>
+                        {coin.coins.map(c => {
+                            return(
+                                <td key={c.name}><div className="cell-title">{c.name}</div><div className="cell-info">{c.change}</div></td>
+                            )
+                        })}
+                    </tr>
+                )
+            })
+        }
+        {/*{transformedData.map((coin) => {
           return (
               <tr key={coin.s}>
                 <td>{coin.s}</td>
@@ -37,7 +53,7 @@ const Home: NextPage<ICoinPage> = ({coinData}) => {
                   })}
               </tr>
           )
-        })}
+        })}*/}
         </tbody>
       </table>
     </div>
