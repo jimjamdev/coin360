@@ -5,7 +5,7 @@ const getCoins = (params?: any) => {
         currency: 'USD',
         updates_from: '1629894793',
         no_charts: true,
-        period: '24h',
+        period: '1h',
         ...params
     }
     return Fetch('coins', defaultParams)

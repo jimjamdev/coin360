@@ -24,6 +24,8 @@ const Home: NextPage<ICoinPage> = ({coinData}) => {
         }
     }
 
+    console.log('data', slicedData)
+
   return (
     <div className={styles.container}>
       <Head>
@@ -45,7 +47,7 @@ const Home: NextPage<ICoinPage> = ({coinData}) => {
                                 <td key={c.name}>
                                     <div className="cell-title">{c.name}</div>
                                     <div className={`cell-info ${c.change < 0 && 'negative'}`}>
-                                        {c.change}<br /><strong>{renderMainCoinName(coin.name, c.name, changeComparison)}</strong>
+                                        {c.change}%<br /><strong>{renderMainCoinName(coin.name, c.name, changeComparison)}</strong>
                                     </div>
                                 </td>
                             )
