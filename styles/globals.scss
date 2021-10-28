@@ -14,3 +14,28 @@ a {
 * {
   box-sizing: border-box;
 }
+
+table {
+  border: solid 1px gray;
+}
+
+table tbody td {
+  border-left: solid 1px gray;
+}
+
+table tbody td:last-of-type {
+  border-left: none;
+}
+
+.cell-title {
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  padding: 1rem;
+  border-bottom: solid 1px gray;
+}
+.cell-info {
+  display: block;
+  padding: 3rem;
+  background: lightgreen;
+}

@@ -1,21 +1,18 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import {getCoins} from '../providers'
+import {ICoinData} from "../interface/coin";
 import styles from '../styles/Home.module.scss'
 
-interface ICoinData {
-  coinData: {
-    data: [{
-      s: string;
-      p: string;
-      ch: string;
-    }];
-    error: string;
-  }
+interface ICoinPage {
+    coinData: ICoinData
 }
 
-const Home: NextPage<ICoinData> = ({coinData}) => {
+const Home: NextPage<ICoinPage> = ({coinData}) => {
   const {data = [], error = ''} = coinData;
+
+  const transformedData = data.filter(coin => coin.p !== 0)
+
   return (
     <div className={styles.container}>
       <Head>
@@ -25,9 +22,23 @@ const Home: NextPage<ICoinData> = ({coinData}) => {
       </Head>
       {error && error}
       <table>
-      {data && data.map((coin) => {
-        return <tr key={coin.s}><td>{coin.s}</td> <td>{coin.p}</td> <td>{coin.ch}</td></tr>
-      })}
+        <tbody>
+        {transformedData.map((coin) => {
+          return (
+              <tr key={coin.s}>
+                <td>{coin.s}</td>
+                  {transformedData.map((coin) => {
+                    return (
+                        <td key={coin.s}>
+                          <div className="cell-title">{coin.s}</div>
+                          <div className="cell-info">{coin.ch}%</div>
+                        </td>
+                    )
+                  })}
+              </tr>
+          )
+        })}
+        </tbody>
       </table>
     </div>
   )
