@@ -37,10 +37,15 @@ table tbody td:last-of-type {
 }
 .cell-info {
   display: block;
+  text-align: center;
   padding: 3rem;
   background: lightgreen;
 }
 
 .cell-info.negative {
   background-color: tomato;
+}
+
+.cell-info.empty {
+  background-color: lightgray;
 }

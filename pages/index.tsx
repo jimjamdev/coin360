@@ -43,11 +43,14 @@ const Home: NextPage<ICoinPage> = ({coinData}) => {
                         <td>{coin.name}!</td>
                         {coin.coins.map(c => {
                             const changeComparison = changeDiff(coin.change, c.change)
+                            const isNegative = coin.change > c.change
+                            const isEmptyCell = coin.name === c.name
+                            console.log(changeComparison, c.change)
                             return(
                                 <td key={c.name}>
                                     <div className="cell-title">{c.name}</div>
-                                    <div className={`cell-info ${c.change < 0 && 'negative'}`}>
-                                        {c.change}%<br /><strong>{renderMainCoinName(coin.name, c.name, changeComparison)}</strong>
+                                    <div className={`cell-info ${isNegative && 'negative'} ${isEmptyCell && 'empty'}`}>
+                                        {/*{c.change}%<br />*/}<strong>{renderMainCoinName(coin.name, c.name, changeComparison + '%')}</strong>
                                     </div>
                                 </td>
                             )
