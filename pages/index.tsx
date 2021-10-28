@@ -3,6 +3,7 @@ import Head from 'next/head'
 import {getCoins} from '../providers'
 import {ICoinData} from "../interface/coin";
 import transformCoinData from "../lib/transform-coin-data";
+import changeDiff from "../lib/change-diff";
 import styles from '../styles/Home.module.scss'
 
 interface ICoinPage {
@@ -13,7 +14,15 @@ const Home: NextPage<ICoinPage> = ({coinData}) => {
   const {data = [], error = ''} = coinData;
 
   const transformedData = transformCoinData(data);
-    const slicedData = transformedData.slice(0, 5); //todo: we want to tie this into a provider so we dont display all data at once. load what only on the screen with onscroll
+  const slicedData = transformedData.slice(0, 5); //todo: we want to tie this into a provider so we dont display all data at once. load what only on the screen with onscroll
+
+    function renderMainCoinName(val1: string, val2: string, displayText: string | number) {
+        if (val1 === val2) {
+            return '-'
+        } else {
+            return displayText
+        }
+    }
 
   return (
     <div className={styles.container}>
@@ -29,10 +38,16 @@ const Home: NextPage<ICoinPage> = ({coinData}) => {
             slicedData.map(coin => {
                 return (
                     <tr key={coin.name}>
-                        <td>{coin.name}</td>
+                        <td>{coin.name}!</td>
                         {coin.coins.map(c => {
+                            const changeComparison = changeDiff(coin.change, c.change)
                             return(
-                                <td key={c.name}><div className="cell-title">{c.name}</div><div className="cell-info">{c.change}</div></td>
+                                <td key={c.name}>
+                                    <div className="cell-title">{c.name}</div>
+                                    <div className={`cell-info ${c.change < 0 && 'negative'}`}>
+                                        {c.change}<br /><strong>{renderMainCoinName(coin.name, c.name, changeComparison)}</strong>
+                                    </div>
+                                </td>
                             )
                         })}
                     </tr>
