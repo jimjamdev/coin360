@@ -1,7 +1,5 @@
 import Fetch from "../../lib/fetch-api";
 
-// https://coin360.com/api/coins?currency=USD&updates_from=1629894793&period=24h&no_charts=true
-
 const getCoins = (params?: any) => {
     const defaultParams = {
         currency: 'USD',

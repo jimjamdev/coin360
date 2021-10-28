@@ -1,10 +1,20 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import {getCoins} from '../providers'
 import styles from '../styles/Home.module.scss'
 
-const Home: NextPage = ({coinData}) => {
+interface ICoinData {
+  coinData: {
+    data: [{
+      s: string;
+      p: string;
+      ch: string;
+    }];
+    error: string;
+  }
+}
+
+const Home: NextPage<ICoinData> = ({coinData}) => {
   const {data = [], error = ''} = coinData;
   return (
     <div className={styles.container}>
@@ -14,9 +24,11 @@ const Home: NextPage = ({coinData}) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {error && error}
+      <table>
       {data && data.map((coin) => {
-        return `${coin.s} `
+        return <tr key={coin.s}><td>{coin.s}</td> <td>{coin.p}</td> <td>{coin.ch}</td></tr>
       })}
+      </table>
     </div>
   )
 }
