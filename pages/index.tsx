@@ -49,7 +49,7 @@ const Home: NextPage<ICoinPage> = ({coinData}) => {
                         })}
                     </tr>
                 )
-            })
+            }) || 'no data'
         }
         </tbody>
       </table>
