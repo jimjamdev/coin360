@@ -16,8 +16,6 @@ const Home: NextPage<ICoinPage> = ({coinData}) => {
   const transformedData = transformCoinData(data) || [];
   const slicedData = transformedData.slice(0, 5) || []; //todo: we want to tie this into a provider so we dont display all data at once. load what only on the screen with onscroll
 
-    console.log('data', slicedData)
-
   return (
     <div className={styles.container}>
       <Head>
@@ -29,19 +27,21 @@ const Home: NextPage<ICoinPage> = ({coinData}) => {
       <table>
         <tbody>
         {
-            slicedData.map(coin => {
+            slicedData.map((coin, index) => {
                 return (
                     <tr key={coin.name}>
-                        <td>{coin.name}!</td>
-                        {coin.coins.map(c => {
+                        <td className="cell-left">
+                            <div>{coin.name}!</div>
+                        </td>
+                        {coin?.coins.map(c => {
                             const changeComparison = changeDiff(coin.change, c.change)
                             const isNegative = coin.change > c.change
                             const isEmptyCell = coin.name === c.name
                             return(
                                 <td key={c.name}>
-                                    <div className="cell-title">{c.name}</div>
+                                    { index === 0 && <div className="cell-title">{c.name}</div> }
                                     <div className={`cell-info ${isNegative && 'negative'} ${isEmptyCell && 'empty'}`}>
-                                        {/*{c.change}%<br />*/}<strong>{isEmptyCell && '-' || changeComparison + '%'}</strong>
+                                        {c.change}%<br /><strong>{isEmptyCell && '-' || changeComparison + '%'}</strong>
                                     </div>
                                 </td>
                             )

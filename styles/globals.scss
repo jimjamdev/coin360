@@ -28,6 +28,14 @@ table tbody td:last-of-type {
   border-left: none;
 }
 
+.cell-left {
+  border-bottom: solid 1px gray;
+  div {
+    transform: rotate(-90deg);
+    font-weight: bolder;
+  }
+}
+
 .cell-title {
   font-weight: bold;
   text-align: center;
