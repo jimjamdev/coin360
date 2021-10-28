@@ -13,8 +13,8 @@ interface ICoinPage {
 const Home: NextPage<ICoinPage> = ({coinData}) => {
   const {data = [], error = ''} = coinData;
 
-  const transformedData = transformCoinData(data);
-  const slicedData = transformedData.slice(0, 5); //todo: we want to tie this into a provider so we dont display all data at once. load what only on the screen with onscroll
+  const transformedData = transformCoinData(data) || [];
+  const slicedData = transformedData.slice(0, 5) || []; //todo: we want to tie this into a provider so we dont display all data at once. load what only on the screen with onscroll
 
     console.log('data', slicedData)
 
@@ -37,7 +37,6 @@ const Home: NextPage<ICoinPage> = ({coinData}) => {
                             const changeComparison = changeDiff(coin.change, c.change)
                             const isNegative = coin.change > c.change
                             const isEmptyCell = coin.name === c.name
-                            console.log(changeComparison, c.change)
                             return(
                                 <td key={c.name}>
                                     <div className="cell-title">{c.name}</div>
@@ -51,21 +50,6 @@ const Home: NextPage<ICoinPage> = ({coinData}) => {
                 )
             })
         }
-        {/*{transformedData.map((coin) => {
-          return (
-              <tr key={coin.s}>
-                <td>{coin.s}</td>
-                  {transformedData.map((coin) => {
-                    return (
-                        <td key={coin.s}>
-                          <div className="cell-title">{coin.s}</div>
-                          <div className="cell-info">{coin.ch}%</div>
-                        </td>
-                    )
-                  })}
-              </tr>
-          )
-        })}*/}
         </tbody>
       </table>
     </div>
