@@ -1,0 +1,1 @@
+export { getCoins } from './coins'
