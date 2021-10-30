@@ -34,10 +34,10 @@ const Home: NextPage<ICoinPage> = ({coinData}) => {
                             <div>{coin.name}!</div>
                         </td>
                         {coin?.coins.map(c => {
-                            const changeComparison = changeDiff(coin.change, c.change)
-                            const isNegative = coin.change > c.change
-                            const isEmptyCell = coin.name === c.name
-                            const plusOrMinus = !isNegative ? '+' : '-'
+                            const changeComparison = changeDiff(coin.change, c.change);
+                            const isNegative = coin.change > c.change;
+                            const isEmptyCell = coin.name === c.name;
+                            const plusOrMinus = !isNegative ? '+' : '-';
                             return(
                                 <td key={c.name}>
                                     { index === 0 && <div className="cell-title">{c.name}</div> }
@@ -57,7 +57,7 @@ const Home: NextPage<ICoinPage> = ({coinData}) => {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const coinData = await getCoins()
   return {
     props: {coinData}, // will be passed to the page component as props
