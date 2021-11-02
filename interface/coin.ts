@@ -5,6 +5,6 @@ export interface ICoin {
 }
 
 export interface ICoinData {
-    data: [ ICoin ];
-    error: string;
+    data?: [ ICoin ];
+    error?: string;
 }

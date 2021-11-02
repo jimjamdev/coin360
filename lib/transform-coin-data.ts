@@ -1,6 +1,10 @@
+import {isArrayEmpty} from "../lib/is-array-empty";
 import {ICoin} from "../interface/coin";
 
 const transformCoinData = (data: Array<ICoin>) => {
+    if (isArrayEmpty(data)) {
+        return
+    }
     // Remove empty results
     const filtered = data.filter(coin => coin.p !== 0)
     return filtered.flatMap(e => (

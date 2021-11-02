@@ -1,1 +1,1 @@
-export { getCoins } from './coins'
+export { getCoins } from '../store/api'
