@@ -1,6 +1,6 @@
 import {FunctionComponent, useEffect, useMemo, useRef, useState} from "react";
 // interface
-import {ICoin} from "../../interface/coin";
+import { ICoin } from "../../interface/coin";
 // lib
 import changeDiff from "../../lib/change-diff";
 import transformCoinData from "../../lib/transform-coin-data";
@@ -16,7 +16,7 @@ interface ICoinList {
     error?: string;
     chunkAmount?: number;
     fetchFunc: () => void;
-    refetchTime: number
+    refetchTime: number;
 }
 
 const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 20 , fetchFunc, refetchTime = 10000}) => {
@@ -51,7 +51,7 @@ const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 20 , fetch
         setLoading(false)
     }, [list])
 
-    // Replace data
+    // Replace data - ***but is a problem***
     useEffect(() => {
         setPage(0)
         setList(transformedData[0])

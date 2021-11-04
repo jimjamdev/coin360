@@ -3,14 +3,14 @@ import { fetchCoins } from '../api'
 
 export interface CoinsState {
     data?: undefined;
-    status?: "" | "loading" | "success" | "failed";
-    error?: string;
+    status?: undefined | "loading" | "success" | "failed";
+    error?: string | undefined;
 }
 
 const initialState: CoinsState = {
     data: undefined,
-    status: '',
-    error: ''
+    status: undefined,
+    error: undefined
 }
 
 export const getCoins = createAsyncThunk('COINS/GET', async(params?: {}) => {

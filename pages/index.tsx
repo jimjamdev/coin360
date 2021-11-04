@@ -25,6 +25,7 @@ const Home: NextPage<ICoinPage> = ({coins}) => {
     }
 
     const clientData = useAppSelector(state => state.coins.data)
+    const clientError = useAppSelector(state => state.coins.error)
     console.log('cd', clientData)
 
   return (
@@ -39,7 +40,7 @@ const Home: NextPage<ICoinPage> = ({coins}) => {
               {error && error}
               <CoinList
                   data={clientData || data}
-                  error={error}
+                  error={clientError || error}
                   fetchFunc={fetchCoins}
                   refetchTime={10000} />
             </div>
