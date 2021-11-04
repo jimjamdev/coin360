@@ -1,5 +1,6 @@
 $cellWidth: 200px;
 $cellHeight: 120px;
+$cellLeftWidth: 40px;
 
 .container {
   height: calc(100vh - 60px);
@@ -32,11 +33,19 @@ $cellHeight: 120px;
   display: flex;
   align-items: center;
   border-bottom: solid 1px gray;
-  width: 80px;
   div {
     transform: rotate(-90deg);
     font-weight: bolder;
+    width: $cellLeftWidth;
   }
+}
+
+.titleWrapper {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: white;
 }
 
 .title {
@@ -45,7 +54,12 @@ $cellHeight: 120px;
   display: block;
   padding: 1rem;
   border-bottom: solid 1px gray;
-  width: $cellWidth;
+  flex-basis: $cellWidth;
+  flex-grow: 0;
+  flex-shrink: 0;
+  &:first-of-type {
+    flex-basis: $cellWidth + $cellLeftWidth;
+  }
 }
 
 .cell {
