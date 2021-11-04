@@ -8,10 +8,10 @@ $titleTextColor: white;
 $titleFontSize: 0.8rem;
 
 $cellFontColor: darken($titleBackGroundColor, 50);
+$borderWidth: 1px;
 $borderColor: rgb(0,20,63);
 
 .section {
-  position: relative;
   background-color: $titleBackGroundColor;
   padding: 0.5rem;
   border-radius: 0.4rem;
@@ -40,7 +40,7 @@ $borderColor: rgb(0,20,63);
 
 .row {
   display: flex;
-  border-bottom: solid 1px $borderColor;
+  border-bottom: solid $borderWidth $borderColor;
 }
 
 .cellLeft {
@@ -70,6 +70,7 @@ $borderColor: rgb(0,20,63);
   color: $titleTextColor;
   background: $titleBackGroundColor;
   border-bottom: solid 1px $borderColor;
+  height: 40px;
 }
 
 .title {
@@ -79,7 +80,7 @@ $borderColor: rgb(0,20,63);
   align-items: center;
   justify-content: center;
   height: $titleHeight;
-  flex-basis: $cellWidth;
+  flex-basis: $cellWidth + $borderWidth;
   flex-grow: 0;
   flex-shrink: 0;
   &:first-of-type {
@@ -90,7 +91,7 @@ $borderColor: rgb(0,20,63);
 
 .cell {
   display: block;
-  border-right: solid 1px $borderColor;
+  border-right: solid $borderWidth $borderColor;
   color: $cellFontColor;
 }
 

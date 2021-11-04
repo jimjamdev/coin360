@@ -5,6 +5,8 @@ import {ICoin} from "../../interface/coin";
 import changeDiff from "../../lib/change-diff";
 import transformCoinData from "../../lib/transform-coin-data";
 import debounce from "../../lib/debounce";
+// components
+import Loader from "../../components/loader";
 // styles
 import styles from './coin-list.module.scss'
 
@@ -13,9 +15,11 @@ interface ICoinList {
     data: Array<ICoin>,
     error?: string;
     chunkAmount?: number;
+    fetchFunc: () => void;
+    refetchTime: number
 }
 
-const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 20 }) => {
+const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 20 , fetchFunc, refetchTime = 10000}) => {
 
     // Transform and chunk the data
     const transformedData = useMemo(() => {
@@ -67,6 +71,7 @@ const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 20 }) => {
         // Also thinking about adding the scroll up/left, and storing only the viewed data in list instead of adding/spreading
     }, 250)
 
+    // Generate grid titles
     const generateTitles = (list: Array<ICoin>) => {
         const titles  = list.map((item) => {
             return {
@@ -79,6 +84,7 @@ const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 20 }) => {
         })
     }
 
+    // Generate grid
     const generateGrid = (list:Array<ICoin>) => {
         return list?.map((coin, index) => {
             return (
@@ -105,10 +111,18 @@ const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 20 }) => {
         }) || 'no data'
     }
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            fetchFunc && fetchFunc()
+        }, refetchTime);
+
+        return () => clearInterval(interval);
+    }, [fetchFunc, refetchTime])
+
     return (
         <>
-            {/*{loading && 'loading...'}*/}
             <section className={styles.section}>
+                { loading && <Loader /> }
                 <article className={styles.container} ref={ref} onScroll={handleScroll}>
                     <header className={styles.titleWrapper}>
                     { generateTitles(list)}

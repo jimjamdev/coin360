@@ -1,6 +1,6 @@
 import axios from 'axios'
 import config from "../config";
-import errorStatus from "../providers/error-status";
+import errorStatus from "../lib/error-status";
 // We could probably just use axios to make this cleaner
 
 
