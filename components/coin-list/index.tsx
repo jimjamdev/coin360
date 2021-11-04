@@ -10,9 +10,9 @@ import styles from './coin-list.module.scss'
 
 
 interface ICoinList {
-    data: Array<any>,
-    error: string;
-    chunkAmount: number;
+    data: Array<ICoin>,
+    error?: string;
+    chunkAmount?: number;
 }
 
 const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 20 }) => {
@@ -55,7 +55,6 @@ const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 20 }) => {
         const scrollHorizontalWidth = el.scrollWidth
         const scrollDownAmount = el.scrollTop + el.clientHeight
         const scrollVerticalHeight = el.scrollHeight
-        console.log('scrollDownAmount', scrollDownAmount, 'scrollVerticalHeight', scrollVerticalHeight)
         if (
             (scrollLeftAmount >= scrollHorizontalWidth) &&
             (list.length < data.length) ||
@@ -69,56 +68,54 @@ const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 20 }) => {
     }, 250)
 
     const generateTitles = (list: Array<ICoin>) => {
-        return list.map((item) => {
+        const titles  = list.map((item) => {
             return {
-                title: item.s
+                title: item.s,
+                change: item.ch
             }
+        })
+        return titles.map(value => {
+            return <div key={value.title} className={styles.title}>{value.title} {value.change}%</div>
         })
     }
 
-
-    console.log('page', page, 'list', list, 'loading', loading)
+    const generateGrid = (list:Array<ICoin>) => {
+        return list?.map((coin, index) => {
+            return (
+                <div className={styles.row} key={coin.s}>
+                    <div className={styles.cellLeft}>
+                        <span>{coin.s}</span>
+                    </div>
+                    {list.map(c => {
+                        const changeComparison = changeDiff(coin.ch, c.ch);
+                        const isNegative = coin.ch > c.ch;
+                        const isEmptyCell = coin.s === c.s;
+                        const plusOrMinus = !isNegative ? '+' : '-';
+                        return(
+                            <div className={styles.cell} key={c.s}>
+                                    {/* We can also use classnames, classcat or clsx, but for this example, fine */}
+                                <div className={[styles.cellInfo, isNegative && styles.cellInfoNegative, isEmptyCell && styles.cellInfoEmpty].join(' ')}>
+                                        <strong>{isEmptyCell && '-' || plusOrMinus + changeComparison + '%'}</strong>
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+            )
+        }) || 'no data'
+    }
 
     return (
         <>
             {/*{loading && 'loading...'}*/}
-            <div className={styles.container} ref={ref} onScroll={handleScroll}>
-                <div className={styles.titleWrapper}>
-                { generateTitles(list).map(value => {
-                    return (
-                        <div key={value.title} className={styles.title}>{value.title}</div>
-                    )
-                }) }
-                </div>
-                    {
-                        list?.map((coin, index) => {
-                            return (
-                                <>
-                                    <div className={styles.row} key={coin.s}>
-                                        <div className={styles.cellLeft}>
-                                            <div>{coin.s}!</div>
-                                        </div>
-                                        {list.map(c => {
-                                            const changeComparison = changeDiff(coin.ch, c.ch);
-                                            const isNegative = coin.ch > c.ch;
-                                            const isEmptyCell = coin.s === c.s;
-                                            const plusOrMinus = !isNegative ? '+' : '-';
-                                            return(
-                                                <div className={styles.cell} key={c.s}>
-                                                    {/*{ index === 0 && <div className={styles.title}>{c.s}</div> }*/}
-                                                    {/* We can also use classnames, classcat or clsx, but for this example, fine */}
-                                                    <div className={[styles.cellInfo, isNegative && styles.cellInfoNegative, isEmptyCell && styles.cellInfoEmpty].join(' ')}>
-                                                        <strong>{isEmptyCell && '-' || plusOrMinus + changeComparison + '%'}</strong>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                </>
-                            )
-                        }) || 'no data'
-                    }
-            </div>
+            <section className={styles.section}>
+                <article className={styles.container} ref={ref} onScroll={handleScroll}>
+                    <header className={styles.titleWrapper}>
+                    { generateTitles(list)}
+                    </header>
+                    { generateGrid(list) }
+                </article>
+            </section>
         </>
     );
 }

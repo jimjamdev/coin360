@@ -1,9 +1,24 @@
 $cellWidth: 200px;
-$cellHeight: 120px;
+$cellHeight: 60px;
 $cellLeftWidth: 40px;
+$titleHeight: $cellLeftWidth;
+
+$titleBackGroundColor: rgba(0,39,68);
+$titleTextColor: white;
+$titleFontSize: 0.8rem;
+
+$cellFontColor: darken($titleBackGroundColor, 50);
+$borderColor: rgb(0,20,63);
+
+.section {
+  position: relative;
+  background-color: $titleBackGroundColor;
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+}
 
 .container {
-  height: calc(100vh - 60px);
+  height: calc(100vh - 130px);
   overflow: auto;
   //-ms-overflow-style: none; /* for Internet Explorer, Edge */
   //scrollbar-width: none; /* for Firefox */
@@ -17,8 +32,6 @@ $cellLeftWidth: 40px;
   background: rgba(#000, 0.5);
 }
 
-.container::-webkit-scrollbar {}
-
 .topTitle {
   padding: 1px;
   font-weight: bolder;
@@ -27,13 +40,21 @@ $cellLeftWidth: 40px;
 
 .row {
   display: flex;
+  border-bottom: solid 1px $borderColor;
 }
 
 .cellLeft {
   display: flex;
   align-items: center;
-  border-bottom: solid 1px gray;
-  div {
+  justify-content: center;
+  font-size: $titleFontSize;
+  color: $titleTextColor;
+  background: $titleBackGroundColor;
+  white-space: nowrap;
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transform: rotate(-90deg);
     font-weight: bolder;
     width: $cellLeftWidth;
@@ -45,32 +66,40 @@ $cellLeftWidth: 40px;
   position: sticky;
   top: 0;
   z-index: 2;
-  background: white;
+  font-size: $titleFontSize;
+  color: $titleTextColor;
+  background: $titleBackGroundColor;
+  border-bottom: solid 1px $borderColor;
 }
 
 .title {
   font-weight: bold;
   text-align: center;
-  display: block;
-  padding: 1rem;
-  border-bottom: solid 1px gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: $titleHeight;
   flex-basis: $cellWidth;
   flex-grow: 0;
   flex-shrink: 0;
   &:first-of-type {
     flex-basis: $cellWidth + $cellLeftWidth;
+    padding-left: $cellLeftWidth;
   }
 }
 
 .cell {
   display: block;
+  border-right: solid 1px $borderColor;
+  color: $cellFontColor;
 }
 
 .cellInfo {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 3rem;
-  background: lightgreen;
+  background: mediumseagreen;
   width: $cellWidth;
   height: $cellHeight;
 }
@@ -80,35 +109,5 @@ $cellLeftWidth: 40px;
 }
 
 .cellInfoEmpty {
-  background-color: lightgray;
+  background-color: darken($titleBackGroundColor, 5);
 }
-
-/*
-.cell-left {
-  border-bottom: solid 1px gray;
-  div {
-    transform: rotate(-90deg);
-    font-weight: bolder;
-  }
-}
-.cell-title {
-  font-weight: bold;
-  text-align: center;
-  display: block;
-  padding: 1rem;
-  border-bottom: solid 1px gray;
-}
-.cell-info {
-  display: block;
-  text-align: center;
-  padding: 3rem;
-  background: lightgreen;
-}
-
-.cell-info.negative {
-  background-color: tomato;
-}
-
-.cell-info.empty {
-  background-color: lightgray;
-}*/
