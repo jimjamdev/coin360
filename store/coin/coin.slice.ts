@@ -36,7 +36,8 @@ export const coinSlice = createSlice({
                 state.status = 'success'
             const { payload = {} } = action
              console.log('===state', state, '===payload', payload.data)
-                state.data.push(payload.data)
+                // @ts-ignore
+            state.data = payload.data
         }).addCase(getCoins.rejected, (state, action) => {
             state.status = 'failed'
             state.error = ' some error occurred'

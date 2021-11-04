@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
-import useSWR from 'swr'
 import Head from 'next/head'
 //redux
 import { wrapper } from '../store/store'
+import { useAppDispatch } from '../store/hooks';
 import { getCoins } from "../store/coin/coin.slice";
 // interface
 import {ICoinData} from "../interface/coin";
@@ -18,6 +18,9 @@ interface ICoinPage {
 
 const Home: NextPage<ICoinPage> = ({coins}) => {
     const {data = [], error = ''} = coins;
+    const dispatch = useAppDispatch()
+
+    const fetchCoins = () => dispatch(getCoins())
 
   return (
       <>
@@ -32,7 +35,7 @@ const Home: NextPage<ICoinPage> = ({coins}) => {
               <CoinList
                   data={data}
                   error={error}
-                  fetchFunc={() => {console.log('refreshing')}}
+                  fetchFunc={fetchCoins}
                   refetchTime={10000} />
             </div>
       </>
@@ -42,7 +45,8 @@ const Home: NextPage<ICoinPage> = ({coins}) => {
 export const getServerSideProps = wrapper.getServerSideProps(store => async () => {
     /* We want the fetch on the server for SEO and page load speed.
     * Ideally though, we'd have pagination on the serverside, only grab the data for a single page here,
-    * and use a fetch hook to dynamically pull each pages data on scroll
+    * and use a fetch hook to dynamically pull each pages data on scroll.
+    * This also also helpful for the setInterval as it's problematic trying to do it with this much client side data.
     * */
     const req = await store.dispatch(getCoins())
     const { payload = {} } = req

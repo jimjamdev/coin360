@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
-import {createWrapper, HYDRATE} from 'next-redux-wrapper';
+import {createWrapper} from 'next-redux-wrapper';
 
 import coinReducer from './coin/coin.slice'
 
