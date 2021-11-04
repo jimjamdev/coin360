@@ -44,12 +44,19 @@ const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 20 , fetch
                 )
             ]
         })
-    }, [transformedData, page])
+    }, [page])
 
     // Handle loading
     useEffect(() => {
         setLoading(false)
     }, [list])
+
+    // Replace data
+    useEffect(() => {
+        setPage(0)
+        setList(transformedData[0])
+    }, [transformedData, data])
+
 
 
     // Handle sideways scroll => page
@@ -73,13 +80,13 @@ const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 20 , fetch
 
     // Generate grid titles
     const generateTitles = (list: Array<ICoin>) => {
-        const titles  = list.map((item) => {
+        const titles  = list?.map((item) => {
             return {
                 title: item.s,
                 change: item.ch
             }
         })
-        return titles.map(value => {
+        return titles?.map(value => {
             return <div key={value.title} className={styles.title}>{value.title} {value.change}%</div>
         })
     }

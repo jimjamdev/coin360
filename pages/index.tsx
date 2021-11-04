@@ -2,8 +2,8 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 //redux
 import { wrapper } from '../store/store'
-import { useAppDispatch } from '../store/hooks';
-import { getCoins } from "../store/coin/coin.slice";
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { getCoins, coinData } from "../store/coin/coin.slice";
 // interface
 import {ICoinData} from "../interface/coin";
 // components
@@ -20,7 +20,12 @@ const Home: NextPage<ICoinPage> = ({coins}) => {
     const {data = [], error = ''} = coins;
     const dispatch = useAppDispatch()
 
-    const fetchCoins = () => dispatch(getCoins())
+    const fetchCoins = ()  => {
+        dispatch(getCoins())
+    }
+
+    const clientData = useAppSelector(state => state.coins.data)
+    console.log('cd', clientData)
 
   return (
       <>
@@ -33,7 +38,7 @@ const Home: NextPage<ICoinPage> = ({coins}) => {
               </Head>
               {error && error}
               <CoinList
-                  data={data}
+                  data={clientData || data}
                   error={error}
                   fetchFunc={fetchCoins}
                   refetchTime={10000} />

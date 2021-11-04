@@ -1,16 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import Fetch from "../../lib/fetch-api";
-import type { AppState, AppThunk } from '../store'
 import { fetchCoins } from '../api'
 
 export interface CoinsState {
-    data?: [];
+    data?: undefined;
     status?: "" | "loading" | "success" | "failed";
     error?: string;
 }
 
 const initialState: CoinsState = {
-    data: [],
+    data: undefined,
     status: '',
     error: ''
 }
@@ -24,7 +22,7 @@ export const coinSlice = createSlice({
     initialState,
     // Our reducers
     reducers: {
-        selection: (state) => {
+        coinData: (state) => {
             state.data
         }
     },
@@ -36,7 +34,6 @@ export const coinSlice = createSlice({
                 state.status = 'success'
             const { payload = {} } = action
              console.log('===state', state, '===payload', payload.data)
-                // @ts-ignore
             state.data = payload.data
         }).addCase(getCoins.rejected, (state, action) => {
             state.status = 'failed'
@@ -45,6 +42,6 @@ export const coinSlice = createSlice({
     }
 })
 
-export const { selection } = coinSlice.actions
+export const { coinData } = coinSlice.actions
 
 export default coinSlice.reducer
