@@ -1,0 +1,100 @@
+$cellWidth: 200px;
+$cellHeight: 120px;
+
+.container {
+  height: calc(100vh - 60px);
+  overflow: auto;
+  //-ms-overflow-style: none; /* for Internet Explorer, Edge */
+  //scrollbar-width: none; /* for Firefox */
+  //overflow-y: scroll;
+  &::-webkit-scrollbar {
+    //display: none; /* for Chrome, Safari, and Opera */
+  }
+}
+
+.loading {
+  background: rgba(#000, 0.5);
+}
+
+.container::-webkit-scrollbar {}
+
+.topTitle {
+  padding: 1px;
+  font-weight: bolder;
+  background: white;
+}
+
+.row {
+  display: flex;
+}
+
+.cellLeft {
+  display: flex;
+  align-items: center;
+  border-bottom: solid 1px gray;
+  width: 80px;
+  div {
+    transform: rotate(-90deg);
+    font-weight: bolder;
+  }
+}
+
+.title {
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  padding: 1rem;
+  border-bottom: solid 1px gray;
+  width: $cellWidth;
+}
+
+.cell {
+  display: block;
+}
+
+.cellInfo {
+  display: block;
+  text-align: center;
+  padding: 3rem;
+  background: lightgreen;
+  width: $cellWidth;
+  height: $cellHeight;
+}
+
+.cellInfoNegative {
+  background-color: tomato;
+}
+
+.cellInfoEmpty {
+  background-color: lightgray;
+}
+
+/*
+.cell-left {
+  border-bottom: solid 1px gray;
+  div {
+    transform: rotate(-90deg);
+    font-weight: bolder;
+  }
+}
+.cell-title {
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  padding: 1rem;
+  border-bottom: solid 1px gray;
+}
+.cell-info {
+  display: block;
+  text-align: center;
+  padding: 3rem;
+  background: lightgreen;
+}
+
+.cell-info.negative {
+  background-color: tomato;
+}
+
+.cell-info.empty {
+  background-color: lightgray;
+}*/

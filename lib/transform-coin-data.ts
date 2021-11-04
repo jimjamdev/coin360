@@ -1,24 +1,27 @@
 import {isArrayEmpty} from "../lib/is-array-empty";
 import {ICoin} from "../interface/coin";
+import chunkArray from "../lib/chunk-array";
 
-const transformCoinData = (data: Array<ICoin>) => {
+const transformCoinData = (data: Array<ICoin>, chunkAmount: number = 20) => {
     if (isArrayEmpty(data)) {
         return
     }
     // Remove empty results
     const filtered = data.filter(coin => coin.p !== 0)
-    return filtered.flatMap(e => (
+    // Too big and slow
+    /*const shape = filtered.flatMap(e => (
         {
-            name: e.s,
-            price: e.p,
-            change: e.ch,
+            s: e.s,
+            p: e.p,
+            ch: e.ch,
             coins: data.flatMap(e => ({
-                name: e.s,
-                price: e.p,
-                change: e.ch,
+                s: e.s,
+                p: e.p,
+                ch: e.ch,
             }))
         }
-    ))
+    ))*/
+    return chunkArray(filtered, chunkAmount)
 }
 
 export default transformCoinData
