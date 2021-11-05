@@ -1,0 +1,17 @@
+$loaderHeight: 60px;
+$loaderWidth: 220px;
+$loaderColor: white;
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $loaderWidth;
+  height: $loaderHeight;
+  background: $loaderColor;
+  position: absolute;
+  border-radius: 2rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

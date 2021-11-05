@@ -1,0 +1,115 @@
+$cellWidth: 200px;
+$cellHeight: 60px;
+$cellLeftWidth: 40px;
+$titleHeight: $cellLeftWidth;
+
+$titleBackGroundColor: rgba(0,39,68);
+$titleTextColor: white;
+$titleFontSize: 0.8rem;
+
+$cellFontColor: darken($titleBackGroundColor, 50);
+$borderWidth: 1px;
+$borderColor: rgb(0,20,63);
+
+.section {
+  background-color: $titleBackGroundColor;
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+}
+
+.container {
+  height: calc(100vh - 130px);
+  overflow: auto;
+  //-ms-overflow-style: none; /* for Internet Explorer, Edge */
+  //scrollbar-width: none; /* for Firefox */
+  //overflow-y: scroll;
+  &::-webkit-scrollbar {
+    //display: none; /* for Chrome, Safari, and Opera */
+  }
+}
+
+.loading {
+  background: rgba(#000, 0.5);
+}
+
+.topTitle {
+  padding: 1px;
+  font-weight: bolder;
+  background: white;
+}
+
+.row {
+  display: flex;
+  border-bottom: solid $borderWidth $borderColor;
+}
+
+.cellLeft {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $titleFontSize;
+  color: $titleTextColor;
+  background: $titleBackGroundColor;
+  white-space: nowrap;
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-90deg);
+    font-weight: bolder;
+    width: $cellLeftWidth;
+  }
+}
+
+.titleWrapper {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  font-size: $titleFontSize;
+  color: $titleTextColor;
+  background: $titleBackGroundColor;
+  border-bottom: solid 1px $borderColor;
+  height: 40px;
+}
+
+.title {
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: $titleHeight;
+  flex-basis: $cellWidth + $borderWidth;
+  background: $titleBackGroundColor;
+  flex-grow: 0;
+  flex-shrink: 0;
+  &:first-of-type {
+    flex-basis: $cellWidth + $cellLeftWidth;
+    padding-left: $cellLeftWidth;
+  }
+}
+
+.cell {
+  display: block;
+  border-right: solid $borderWidth $borderColor;
+  color: $cellFontColor;
+}
+
+.cellInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: mediumseagreen;
+  width: $cellWidth;
+  height: $cellHeight;
+}
+
+.cellInfoNegative {
+  background-color: tomato;
+}
+
+.cellInfoEmpty {
+  background-color: darken($titleBackGroundColor, 5);
+}
