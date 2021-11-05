@@ -26,7 +26,6 @@ const Home: NextPage<ICoinPage> = ({coins}) => {
 
     const clientData = useAppSelector(state => state.coins.data)
     const clientError = useAppSelector(state => state.coins.error)
-    console.log('cd', clientData)
 
   return (
       <>
@@ -42,7 +41,7 @@ const Home: NextPage<ICoinPage> = ({coins}) => {
                   data={clientData || data}
                   error={clientError || error}
                   fetchFunc={fetchCoins}
-                  refetchTime={10000} />
+                  refetchTime={60000} />
             </div>
       </>
   )
@@ -56,7 +55,6 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async () =
     * */
     const req = await store.dispatch(getCoins())
     const { payload = {} } = req
-    console.log('State on server', store.getState());
     return {
         props: {
             coins: { data: payload?.data, error: payload?.error }

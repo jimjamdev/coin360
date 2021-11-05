@@ -6,7 +6,7 @@ const transformCoinData = (data: Array<ICoin>, chunkAmount: number = 20) => {
     if (isArrayEmpty(data)) {
         return
     }
-    // Remove empty results
+    // Remove empty items
     const filtered = data.filter(coin => coin.p !== 0)
     // Too big and slow
     /*const shape = filtered.flatMap(e => (

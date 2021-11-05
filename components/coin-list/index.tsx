@@ -19,7 +19,7 @@ interface ICoinList {
     refetchTime: number;
 }
 
-const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 20 , fetchFunc, refetchTime = 10000}) => {
+const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 50 , fetchFunc, refetchTime = 10000}) => {
 
     // Transform and chunk the data
     const transformedData = useMemo(() => {
@@ -34,6 +34,9 @@ const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 20 , fetch
 
     // Add to data list on scroll
     useEffect(() => {
+
+        const btcRow = data.filter(coin => coin.s === 'BTC')
+
         setList((prev) => {
             return [
                 ...Array.from(
@@ -53,13 +56,13 @@ const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 20 , fetch
 
     // Replace data - ***but is a problem***
     useEffect(() => {
-        setPage(0)
-        setList(transformedData[0])
+        /// setPage(0)
+        setList(transformedData[page])
     }, [transformedData, data])
 
 
 
-    // Handle sideways scroll => page
+    // Handle scroll => page
     const handleScroll = debounce((element: any) => {
         const el = element?.target
         const scrollLeftAmount = el.scrollLeft + el.clientWidth
