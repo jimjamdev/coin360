@@ -81,6 +81,7 @@ $borderColor: rgb(0,20,63);
   justify-content: center;
   height: $titleHeight;
   flex-basis: $cellWidth + $borderWidth;
+  background: $titleBackGroundColor;
   flex-grow: 0;
   flex-shrink: 0;
   &:first-of-type {
