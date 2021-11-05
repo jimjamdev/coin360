@@ -20,8 +20,8 @@ const Home: NextPage<ICoinPage> = ({coins}) => {
     const {data = [], error = ''} = coins;
     const dispatch = useAppDispatch()
 
-    const fetchCoins = ()  => {
-        dispatch(getCoins())
+    const fetchCoins = (params: any)  => {
+        dispatch(getCoins(params))
     }
 
     const clientData = useAppSelector(state => state.coins.data)

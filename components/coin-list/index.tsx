@@ -1,4 +1,4 @@
-import {FunctionComponent, useEffect, useMemo, useRef, useState} from "react";
+import {FunctionComponent, ChangeEvent, useEffect, useMemo, useRef, useState, SyntheticEvent, useCallback} from "react";
 // interface
 import { ICoin } from "../../interface/coin";
 // lib
@@ -7,6 +7,7 @@ import transformCoinData from "../../lib/transform-coin-data";
 import debounce from "../../lib/debounce";
 // components
 import Loader from "../../components/loader";
+import Select from "../../components/select";
 // styles
 import styles from './coin-list.module.scss'
 
@@ -15,11 +16,18 @@ interface ICoinList {
     data: Array<ICoin>,
     error?: string;
     chunkAmount?: number;
-    fetchFunc: () => void;
+    fetchFunc: (params: any) => any;
     refetchTime: number;
 }
 
-const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 50 , fetchFunc, refetchTime = 10000}) => {
+const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 50 , fetchFunc, refetchTime = 10000, error}) => {
+
+    const selectOptions = [
+        { text: '1 Hour', value: '1h' },
+        { text: '24 Hours', value: '24h' },
+        { text: '7 Days', value: '7d'},
+        { text: '30 Days', value: '30d' }
+    ]
 
     // Transform and chunk the data
     const transformedData = useMemo(() => {
@@ -29,13 +37,14 @@ const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 50 , fetch
     const [ loading, setLoading ] = useState(false)
     const [ list, setList ] = useState(transformedData[0]);
     const [ page, setPage ] = useState(0);
+    const [ period, setPeriod ] = useState('1h')
 
     const ref = useRef<HTMLDivElement>(null)
-
     // Add to data list on scroll
     useEffect(() => {
 
-        const btcRow = data.filter(coin => coin.s === 'BTC')
+        // If we want to force the BTC at top level or duplicate it twice
+        // const btcRow = data.filter(coin => coin.s === 'BTC')
 
         setList((prev) => {
             return [
@@ -56,7 +65,7 @@ const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 50 , fetch
 
     // Replace data - ***but is a problem***
     useEffect(() => {
-        /// setPage(0)
+        setPage(0)
         setList(transformedData[page])
     }, [transformedData, data])
 
@@ -80,6 +89,14 @@ const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 50 , fetch
         }
         // Also thinking about adding the scroll up/left, and storing only the viewed data in list instead of adding/spreading
     }, 250)
+
+
+    // Handle the timeframe select and pass to state
+    const handleTimeframeSelect = ((e: ChangeEvent<HTMLSelectElement>): void => {
+        const value = e?.target?.value
+        setPeriod(value)
+    })
+
 
     // Generate grid titles
     const generateTitles = (list: Array<ICoin>) => {
@@ -121,16 +138,29 @@ const CoinList: FunctionComponent<ICoinList> = ({ data, chunkAmount = 50 , fetch
         }) || 'no data'
     }
 
+    const fetchData = useCallback((params) => {
+        return fetchFunc && fetchFunc(params)
+    }, [fetchFunc]);
+
     useEffect(() => {
         const interval = setInterval(() => {
-            fetchFunc && fetchFunc()
+            fetchData({ period })
         }, refetchTime);
 
         return () => clearInterval(interval);
-    }, [fetchFunc, refetchTime])
+    }, [period, fetchData, refetchTime])
+
+
+    // Refetch if period changes
+    useEffect(() => {
+        fetchData({ period })
+    }, [period])
+
 
     return (
         <>
+            { error && error }
+            <Select name="timeframe" options={selectOptions} defaultValue={period} onChange={handleTimeframeSelect} />
             <section className={styles.section}>
                 { loading && <Loader /> }
                 <article className={styles.container} ref={ref} onScroll={handleScroll}>

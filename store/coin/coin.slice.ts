@@ -33,7 +33,6 @@ export const coinSlice = createSlice({
         }).addCase(getCoins.fulfilled, (state, action) => {
                 state.status = 'success'
             const { payload = {} } = action
-             console.log('===state', state, '===payload', payload.data)
             state.data = payload.data
         }).addCase(getCoins.rejected, (state, action) => {
             state.status = 'failed'

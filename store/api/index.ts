@@ -7,7 +7,7 @@ const fetchCoins = async(params?: any) => {
         no_charts: true,
         period: '1h',
         // limit: 5, // Limit seems there, no page or offset
-        page: 2,
+        // page: 2,
         ...params
     }
     return Fetch('coins', { params: defaultParams })

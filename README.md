@@ -10,8 +10,9 @@ No third party libraries, no lodash etc. Just having some fun to see what I can 
 - Go from the top of my head from when I done this last in a class component. Realised that sucked.
 - Looked at IntersectionObserver. Great for simple lists, not so great for dealing with horizontal scroll
 - Went back to scroll detection, and just load new data as you scroll down or right.
-- This breaks with the reloading of data.
+- This messes with the reloading of data.
 - It's a fail. But hopefully you see a little bit of my thought process.
+- Also, on your design you have a double BTC row. I don't know what the idea of this was. I can get the first row and inject, but i made the top bar scrollable to no need.
 
 # Time taken
 - About 14 hours between my normal trading hours (help me, you can pay me in BTC)!
